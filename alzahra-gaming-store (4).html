@@ -1,0 +1,1155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>ALZAHRA — Gaming Store</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Rajdhani:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#060810;--surface:#0d1120;--card:#111827;--border:rgba(255,255,255,0.06);
+  --ps-glow:#0070d1;--xbox-glow:#52b043;--accent:#e8ff00;--accent2:#ff2d55;
+  --text:#e8ecf4;--muted:#6b7280;--white:#ffffff;
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'Rajdhani',sans-serif;overflow-x:hidden}
+
+::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:var(--accent);border-radius:2px}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:0 5vw;height:68px;background:rgba(6,8,16,.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
+.nav-logo{font-family:'Orbitron',monospace;font-weight:900;font-size:1.4rem;letter-spacing:.15em;color:var(--white);text-decoration:none}
+.nav-logo span{color:var(--accent)}
+.nav-links{display:flex;gap:2rem;list-style:none}
+.nav-links a{font-family:'Rajdhani',sans-serif;font-weight:600;font-size:.9rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color .2s}
+.nav-links a:hover{color:var(--accent)}
+.nav-right{display:flex;align-items:center;gap:1rem}
+.search-bar-nav{display:flex;align-items:center;background:var(--card);border:1px solid var(--border);padding:.3rem .8rem;gap:.5rem}
+.search-bar-nav input{background:transparent;border:none;color:var(--white);font-family:'Rajdhani',sans-serif;font-size:.9rem;width:160px;outline:none}
+.search-bar-nav input::placeholder{color:var(--muted)}
+.search-bar-nav svg{opacity:.5}
+.btn-cart{background:transparent;border:1.5px solid var(--accent);color:var(--accent);font-family:'Orbitron',monospace;font-size:.7rem;letter-spacing:.1em;padding:.4rem 1rem;cursor:pointer;transition:background .2s,color .2s;white-space:nowrap}
+.btn-cart:hover{background:var(--accent);color:var(--bg)}
+
+/* HERO */
+.hero{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;align-items:center;padding:100px 5vw 60px;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 80% at 75% 50%,rgba(0,112,209,.12) 0%,transparent 70%),radial-gradient(ellipse 40% 60% at 20% 60%,rgba(232,255,0,.05) 0%,transparent 60%);pointer-events:none}
+.hero-grid{position:absolute;inset:0;overflow:hidden;pointer-events:none;opacity:.06;background-image:linear-gradient(to right,var(--accent) 1px,transparent 1px),linear-gradient(to bottom,var(--accent) 1px,transparent 1px);background-size:60px 60px}
+.hero-text{position:relative;z-index:2}
+.hero-eyebrow{font-family:'Share Tech Mono',monospace;font-size:.78rem;letter-spacing:.25em;color:var(--accent);text-transform:uppercase;margin-bottom:1.2rem;display:flex;align-items:center;gap:.8rem}
+.hero-eyebrow::before{content:'';display:block;width:32px;height:1px;background:var(--accent)}
+h1{font-family:'Orbitron',monospace;font-weight:900;font-size:clamp(2.8rem,5vw,5.5rem);line-height:.95;letter-spacing:-.02em;color:var(--white);margin-bottom:1.5rem}
+h1 .hl{color:transparent;-webkit-text-stroke:1.5px var(--accent)}
+.hero-desc{font-size:1.1rem;color:var(--muted);line-height:1.7;max-width:480px;margin-bottom:2.5rem}
+.hero-btns{display:flex;gap:1rem;flex-wrap:wrap}
+.btn-primary{font-family:'Orbitron',monospace;font-size:.78rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;background:var(--accent);color:var(--bg);border:none;padding:.9rem 2rem;cursor:pointer;position:relative;overflow:hidden;transition:transform .15s}
+.btn-primary:hover{transform:translateY(-2px)}
+.btn-secondary{font-family:'Orbitron',monospace;font-size:.78rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;background:transparent;color:var(--text);border:1.5px solid var(--border);padding:.9rem 2rem;cursor:pointer;transition:border-color .2s}
+.btn-secondary:hover{border-color:var(--text)}
+.hero-stats{display:flex;gap:3rem;margin-top:3rem}
+.stat-num{font-family:'Orbitron',monospace;font-size:2rem;font-weight:900;color:var(--white)}
+.stat-num span{color:var(--accent);font-size:1.2rem}
+.stat-label{font-size:.75rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-top:.2rem}
+.hero-visual{position:relative;z-index:2;display:flex;justify-content:center;align-items:center}
+.console-showcase{position:relative;width:440px;height:480px}
+.cc{position:absolute;border:1px solid var(--border);padding:2rem;display:flex;flex-direction:column;align-items:center;justify-content:center;transition:transform .4s,box-shadow .4s;cursor:pointer}
+.cc-ps5{width:280px;height:320px;top:0;left:0;background:linear-gradient(135deg,#0a0f1e,#0d1929);border-color:rgba(0,112,209,.4);box-shadow:0 0 40px rgba(0,112,209,.15)}
+.cc-ps5:hover{transform:translateY(-10px) rotate(-1deg);box-shadow:0 20px 60px rgba(0,112,209,.35)}
+.cc-xbox{width:240px;height:280px;bottom:0;right:0;background:linear-gradient(135deg,#061006,#0a1a0a);border-color:rgba(82,176,67,.4)}
+.cc-xbox:hover{transform:translateY(-10px) rotate(1deg);box-shadow:0 20px 60px rgba(82,176,67,.3)}
+.cc-ps4{width:200px;height:200px;top:50%;right:0;transform:translateY(-50%);background:linear-gradient(135deg,#08081a,#0e0e24);border-color:rgba(0,67,156,.4)}
+.cc-ps4:hover{transform:translateY(calc(-50% - 8px)) rotate(1deg)}
+.cc-icon{font-size:3.5rem;margin-bottom:1rem;display:block}
+.cc-name{font-family:'Orbitron',monospace;font-weight:700;font-size:1.1rem;letter-spacing:.08em;color:var(--white);margin-bottom:.3rem}
+.cc-tag{font-size:.75rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.cc-price{margin-top:.8rem;background:var(--ps-glow);color:white;font-family:'Share Tech Mono',monospace;font-size:.65rem;padding:.2rem .6rem;letter-spacing:.1em}
+.cc-price-x{background:var(--xbox-glow)}
+
+/* TICKER */
+.ticker-wrap{background:var(--accent);padding:.55rem 0;overflow:hidden}
+.ticker-track{display:flex;gap:4rem;animation:ticker 28s linear infinite;white-space:nowrap}
+.ticker-track span{font-family:'Orbitron',monospace;font-size:.7rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--bg)}
+@keyframes ticker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* SECTION */
+section{padding:90px 5vw}
+.section-header{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:3rem}
+.section-label{font-family:'Share Tech Mono',monospace;font-size:.72rem;letter-spacing:.25em;text-transform:uppercase;color:var(--accent);margin-bottom:.6rem}
+h2{font-family:'Orbitron',monospace;font-weight:900;font-size:clamp(1.8rem,3vw,2.8rem);letter-spacing:-.02em;color:var(--white);line-height:1.1}
+h2 em{font-style:normal;color:transparent;-webkit-text-stroke:1px var(--white)}
+.see-all{font-family:'Share Tech Mono',monospace;font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);text-decoration:none;border-bottom:1px solid var(--accent);padding-bottom:2px;flex-shrink:0}
+
+/* CONSOLES GRID */
+.consoles-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5px}
+.console-feature{background:var(--card);padding:2.5rem 2rem;border:1px solid var(--border);position:relative;overflow:hidden;transition:transform .3s;cursor:pointer}
+.console-feature:hover{transform:translateY(-6px)}
+.console-feature::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:var(--gc,var(--accent));transform:scaleX(0);transform-origin:left;transition:transform .4s}
+.console-feature:hover::after{transform:scaleX(1)}
+.console-feature.ps5{--gc:var(--ps-glow)}.console-feature.ps4{--gc:#6644ff}.console-feature.xbox{--gc:var(--xbox-glow)}
+.cf-icon{font-size:2.8rem;margin-bottom:1.2rem;display:block}
+.cf-name{font-family:'Orbitron',monospace;font-weight:700;font-size:1.3rem;letter-spacing:.05em;color:var(--white);margin-bottom:.4rem}
+.cf-sub{font-weight:600;font-size:.85rem;letter-spacing:.1em;text-transform:uppercase;margin-bottom:1.2rem}
+.ps5 .cf-sub{color:var(--ps-glow)}.ps4 .cf-sub{color:#6644ff}.xbox .cf-sub{color:var(--xbox-glow)}
+.cf-desc{font-size:.95rem;color:var(--muted);line-height:1.6;margin-bottom:1.5rem}
+.cf-specs{list-style:none;margin-bottom:2rem}
+.cf-specs li{display:flex;justify-content:space-between;padding:.5rem 0;border-bottom:1px solid var(--border);font-size:.88rem}
+.cf-specs li span:first-child{color:var(--muted);font-weight:500}
+.cf-specs li span:last-child{color:var(--white);font-weight:600;font-family:'Share Tech Mono',monospace;font-size:.82rem}
+.cf-price{font-family:'Orbitron',monospace;font-size:1.7rem;font-weight:900;color:var(--white);margin-bottom:1.2rem}
+.cf-price small{font-size:.8rem;color:var(--muted);font-weight:400;margin-left:.3rem}
+
+/* PLATFORM FILTER */
+.platform-filter{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:2rem;align-items:center}
+.pf-btn{font-family:'Orbitron',monospace;font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;background:var(--card);border:1.5px solid var(--border);color:var(--muted);padding:.5rem 1.2rem;cursor:pointer;transition:all .2s}
+.pf-btn:hover{border-color:var(--accent);color:var(--accent)}
+.pf-btn.active{background:var(--accent);border-color:var(--accent);color:var(--bg)}
+.pf-btn.active-ps5{background:var(--ps-glow);border-color:var(--ps-glow);color:white}
+.pf-btn.active-ps4{background:#6644ff;border-color:#6644ff;color:white}
+.pf-btn.active-xbox{background:var(--xbox-glow);border-color:var(--xbox-glow);color:white}
+.games-search{margin-left:auto;display:flex;align-items:center;gap:.5rem;background:var(--card);border:1px solid var(--border);padding:.4rem .9rem}
+.games-search input{background:transparent;border:none;color:var(--white);font-family:'Rajdhani',sans-serif;font-size:.95rem;width:200px;outline:none}
+.games-search input::placeholder{color:var(--muted)}
+.games-count{font-family:'Share Tech Mono',monospace;font-size:.75rem;color:var(--muted);margin-left:.5rem}
+
+/* GAMES GRID */
+#games{background:var(--surface)}
+.games-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:1rem}
+@media(max-width:1400px){.games-grid{grid-template-columns:repeat(4,1fr)}}
+@media(max-width:1100px){.games-grid{grid-template-columns:repeat(3,1fr)}}
+.game-card{background:var(--card);border:1px solid var(--border);overflow:hidden;position:relative;cursor:pointer;transition:transform .25s,box-shadow .25s}
+.game-card:hover{transform:translateY(-8px);box-shadow:0 20px 50px rgba(0,0,0,.5)}
+.game-card.hidden{display:none}
+.game-thumb{width:100%;aspect-ratio:3/4;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;overflow:hidden}
+.game-thumb-icon{font-size:3.5rem;z-index:1;filter:drop-shadow(0 0 20px rgba(0,0,0,.8))}
+.game-thumb-title{font-family:'Orbitron',monospace;font-size:.7rem;font-weight:700;letter-spacing:.04em;color:rgba(255,255,255,.9);text-align:center;padding:0 .8rem;margin-top:.6rem;z-index:1;line-height:1.3}
+.game-thumb-shine{position:absolute;top:0;left:-100%;width:60%;height:100%;background:linear-gradient(to right,transparent,rgba(255,255,255,.06),transparent);transform:skewX(-20deg);transition:left .6s}
+.game-card:hover .game-thumb-shine{left:150%}
+.plat-tag{position:absolute;top:.6rem;left:.6rem;font-family:'Share Tech Mono',monospace;font-size:.6rem;letter-spacing:.08em;padding:.2rem .5rem;font-weight:700;z-index:2}
+.t-ps5{background:var(--ps-glow);color:white}
+.t-ps4{background:#6644ff;color:white}
+.t-xbox{background:#107c10;color:white}
+.t-multi{background:var(--accent);color:var(--bg)}
+.game-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.85) 0%,transparent 50%);opacity:1;display:flex;align-items:flex-end;padding:.8rem;z-index:3}
+.overlay-btn{transition:background .2s,transform .15s}
+.overlay-btn:hover{background:#c8e000;transform:translateY(-1px)}
+.overlay-btn{width:100%;font-family:'Orbitron',monospace;font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;background:var(--accent);color:var(--bg);border:none;padding:.6rem;cursor:pointer}
+.game-info{padding:.9rem}
+.game-title{font-family:'Orbitron',monospace;font-size:.75rem;font-weight:700;letter-spacing:.03em;color:var(--white);margin-bottom:.25rem;line-height:1.3}
+.game-genre{font-size:.75rem;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:.4rem}
+.game-stars{display:flex;gap:1px;margin-bottom:.4rem}
+.star{color:var(--accent);font-size:.72rem}
+.star.empty{color:#333}
+.game-price{font-family:'Orbitron',monospace;font-size:.9rem;font-weight:900;color:var(--white)}
+.game-price .orig{text-decoration:line-through;color:var(--muted);font-size:.75rem;margin-right:.3rem}
+.game-price .sale{color:var(--accent2)}
+
+/* GAME MODAL */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:500;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(8px);opacity:0;pointer-events:none;transition:opacity .3s}
+.modal-overlay.open{opacity:1;pointer-events:all}
+.modal{background:var(--card);border:1px solid var(--border);max-width:620px;width:90%;max-height:90vh;overflow-y:auto;position:relative;transform:translateY(30px);transition:transform .3s}
+.modal-overlay.open .modal{transform:translateY(0)}
+.modal-close{position:absolute;top:1rem;right:1rem;background:transparent;border:1.5px solid var(--border);color:var(--muted);width:32px;height:32px;display:flex;align-items:center;justify-content:center;font-size:1rem;cursor:pointer;transition:border-color .2s,color .2s}
+.modal-close:hover{border-color:var(--accent2);color:var(--accent2)}
+.modal-cover{width:100%;height:260px;display:flex;align-items:center;justify-content:center;font-size:6rem;position:relative;overflow:hidden}
+.modal-body{padding:2rem}
+.modal-tags{display:flex;gap:.5rem;margin-bottom:1rem;flex-wrap:wrap}
+.modal-tag{font-family:'Share Tech Mono',monospace;font-size:.65rem;letter-spacing:.1em;padding:.2rem .6rem;text-transform:uppercase}
+.modal-title{font-family:'Orbitron',monospace;font-weight:900;font-size:1.5rem;letter-spacing:.04em;color:var(--white);margin-bottom:.5rem}
+.modal-meta{font-size:.85rem;color:var(--muted);margin-bottom:.8rem}
+.modal-stars{display:flex;gap:2px;margin-bottom:1rem}
+.modal-desc{font-size:.95rem;color:var(--muted);line-height:1.7;margin-bottom:1.8rem}
+.platform-select-label{font-family:'Orbitron',monospace;font-size:.75rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--white);margin-bottom:1rem}
+.platform-options{display:flex;gap:.8rem;flex-wrap:wrap;margin-bottom:1.8rem}
+.plat-opt{border:1.5px solid var(--border);padding:.8rem 1.4rem;cursor:pointer;transition:all .2s;display:flex;flex-direction:column;gap:.3rem;min-width:140px}
+.plat-opt:hover{border-color:var(--accent)}
+.plat-opt.selected{border-color:var(--accent);background:rgba(232,255,0,.06)}
+.plat-opt.unavailable{opacity:.3;cursor:default;pointer-events:none}
+.plat-opt-name{font-family:'Orbitron',monospace;font-size:.8rem;font-weight:700;color:var(--white);letter-spacing:.05em}
+.plat-opt-price{font-family:'Orbitron',monospace;font-size:1rem;font-weight:900;color:var(--accent)}
+.plat-opt-badge{font-family:'Share Tech Mono',monospace;font-size:.6rem;letter-spacing:.1em;padding:.15rem .4rem}
+.modal-add{width:100%;font-family:'Orbitron',monospace;font-size:.82rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;background:var(--accent);color:var(--bg);border:none;padding:1rem;cursor:pointer;transition:transform .15s}
+.modal-add:hover{transform:translateY(-2px)}
+.modal-add:disabled{opacity:.4;cursor:default}
+
+/* DEALS BANNER */
+.deals-banner{background:var(--accent);padding:5rem 5vw;display:grid;grid-template-columns:1fr auto;gap:3rem;align-items:center;position:relative;overflow:hidden}
+.deals-banner::before{content:'SALE';position:absolute;font-family:'Orbitron',monospace;font-weight:900;font-size:18rem;color:rgba(0,0,0,.06);right:-2rem;top:50%;transform:translateY(-50%);line-height:1;pointer-events:none}
+.deals-label{font-family:'Share Tech Mono',monospace;font-size:.72rem;letter-spacing:.25em;text-transform:uppercase;color:rgba(0,0,0,.5);margin-bottom:.6rem}
+.deals-heading{font-family:'Orbitron',monospace;font-weight:900;font-size:clamp(2rem,4vw,3.5rem);color:var(--bg);line-height:1;letter-spacing:-.02em}
+.deals-sub{font-size:1rem;font-weight:600;color:rgba(0,0,0,.55);margin-top:.8rem}
+.deals-btn{font-family:'Orbitron',monospace;font-size:.78rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;background:var(--bg);color:var(--accent);border:none;padding:1rem 2.5rem;cursor:pointer;white-space:nowrap;transition:background .2s}
+.deals-btn:hover{background:#111}
+
+/* ACCESSORIES */
+.accessories-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem}
+.acc-card{border:1px solid var(--border);background:var(--card);padding:2rem 1.5rem;text-align:center;cursor:pointer;transition:transform .3s,border-color .3s}
+.acc-card:hover{transform:translateY(-6px);border-color:rgba(232,255,0,.3)}
+.acc-icon{font-size:2.5rem;margin-bottom:1rem;display:block}
+.acc-thumb{width:100%;height:120px;display:flex;align-items:center;justify-content:center;margin-bottom:1rem;border-radius:4px;font-size:2.5rem}
+.acc-name{font-family:'Orbitron',monospace;font-size:.82rem;font-weight:700;color:var(--white);margin-bottom:.3rem;letter-spacing:.05em}
+.acc-compat{font-size:.78rem;font-weight:500;letter-spacing:.1em;color:var(--muted);margin-bottom:.8rem;text-transform:uppercase}
+.acc-price{font-family:'Orbitron',monospace;font-size:1.1rem;font-weight:900;color:var(--accent)}
+
+/* WHY */
+#why{background:var(--surface)}
+.why-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border)}
+.why-item{background:var(--surface);padding:2.5rem 1.8rem;border:1px solid var(--border);position:relative}
+.why-num{font-family:'Orbitron',monospace;font-size:3rem;font-weight:900;color:var(--border);position:absolute;top:1.2rem;right:1.2rem;line-height:1}
+.why-icon{font-size:2rem;margin-bottom:1rem;display:block}
+.why-title{font-family:'Orbitron',monospace;font-weight:700;font-size:.95rem;letter-spacing:.05em;color:var(--white);margin-bottom:.7rem}
+.why-desc{font-size:.9rem;color:var(--muted);line-height:1.7}
+
+/* NEWSLETTER */
+.newsletter{padding:80px 5vw;text-align:center;position:relative;overflow:hidden}
+.newsletter::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 80% at 50% 50%,rgba(232,255,0,.04) 0%,transparent 70%);pointer-events:none}
+.nl-label{font-family:'Share Tech Mono',monospace;font-size:.72rem;letter-spacing:.25em;text-transform:uppercase;color:var(--accent);margin-bottom:.8rem}
+.nl-heading{font-family:'Orbitron',monospace;font-weight:900;font-size:clamp(1.8rem,3vw,2.8rem);color:var(--white);margin-bottom:1rem}
+.nl-sub{font-size:1rem;color:var(--muted);margin-bottom:2.5rem}
+.nl-form{display:flex;gap:.5rem;justify-content:center;max-width:520px;margin:0 auto;position:relative;z-index:1}
+.nl-input{flex:1;background:var(--card);border:1px solid var(--border);color:var(--white);font-family:'Rajdhani',sans-serif;font-size:1rem;padding:.85rem 1.2rem;outline:none;transition:border-color .2s;position:relative;z-index:1;pointer-events:all;-webkit-user-select:text;user-select:text}
+.nl-input:focus{border-color:var(--accent)}
+.nl-input::placeholder{color:var(--muted)}
+.nl-msg{margin-top:1rem;font-family:'Share Tech Mono',monospace;font-size:.8rem;color:var(--accent);opacity:0;transition:opacity .4s}
+.nl-msg.show{opacity:1}
+
+/* FOOTER */
+footer{background:var(--surface);border-top:1px solid var(--border);padding:4rem 5vw 2rem}
+.footer-top{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:3rem;margin-bottom:3rem}
+.footer-brand .nav-logo{display:block;margin-bottom:1rem}
+.footer-desc{font-size:.9rem;color:var(--muted);line-height:1.7;max-width:260px}
+.footer-col h4{font-family:'Orbitron',monospace;font-size:.72rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--white);margin-bottom:1.5rem}
+.footer-col ul{list-style:none}
+.footer-col ul li{margin-bottom:.65rem}
+.footer-col ul li a{font-size:.9rem;color:var(--muted);text-decoration:none;transition:color .2s}
+.footer-col ul li a:hover{color:var(--accent)}
+.footer-bottom{border-top:1px solid var(--border);padding-top:1.8rem;display:flex;justify-content:space-between;align-items:center}
+.footer-copy{font-family:'Share Tech Mono',monospace;font-size:.72rem;letter-spacing:.1em;color:var(--muted)}
+.footer-plats{display:flex;gap:.8rem}
+.plat-badge{font-family:'Share Tech Mono',monospace;font-size:.62rem;letter-spacing:.1em;padding:.25rem .6rem;border:1px solid var(--border);color:var(--muted);text-transform:uppercase}
+
+/* REVEAL */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .55s ease,transform .55s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.game-card,.plat-opt,.pf-btn,.btn-primary,.btn-secondary,.btn-cart,.acc-card,.overlay-btn,.modal-add,.console-feature{touch-action:manipulation;-webkit-tap-highlight-color:rgba(232,255,0,.2)}
+.reveal-delay-1{transition-delay:.1s}.reveal-delay-2{transition-delay:.2s}.reveal-delay-3{transition-delay:.3s}.reveal-delay-4{transition-delay:.4s}
+
+/* TOAST */
+.toast{position:fixed;bottom:2rem;right:2rem;background:var(--accent);color:var(--bg);font-family:'Orbitron',monospace;font-size:.75rem;font-weight:700;letter-spacing:.1em;padding:.8rem 1.4rem;z-index:600;transform:translateY(100px);opacity:0;transition:all .3s}
+.toast.show{transform:translateY(0);opacity:1}
+
+/* PAYMENT MODAL */
+.pay-overlay{position:fixed;inset:0;background:rgba(0,0,0,.88);z-index:400;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .3s;backdrop-filter:blur(10px)}
+.pay-overlay.open{opacity:1;pointer-events:all}
+.pay-modal{background:var(--card);border:1px solid var(--border);width:540px;max-width:95vw;max-height:92vh;overflow-y:auto;position:relative;transform:translateY(30px);transition:transform .3s}
+.pay-overlay.open .pay-modal{transform:translateY(0)}
+.pay-modal::-webkit-scrollbar{width:3px}.pay-modal::-webkit-scrollbar-thumb{background:var(--accent)}
+.pay-close{position:absolute;top:1rem;right:1rem;background:transparent;border:1.5px solid var(--border);color:var(--muted);width:32px;height:32px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:1rem;transition:border-color .2s,color .2s;z-index:2}
+.pay-close:hover{border-color:var(--accent2);color:var(--accent2)}
+.pay-header{padding:2rem 2rem 1.2rem;border-bottom:1px solid var(--border)}
+.pay-title{font-family:'Orbitron',monospace;font-weight:900;font-size:1.3rem;letter-spacing:.05em;color:var(--white);margin-bottom:.3rem}
+.pay-subtitle{font-size:.88rem;color:var(--muted)}
+.pay-body{padding:1.5rem 2rem}
+.pay-section-title{font-family:'Orbitron',monospace;font-size:.72rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--accent);margin:1.4rem 0 .8rem}
+.pay-order-summary{background:var(--surface);border:1px solid var(--border);padding:1rem;margin-bottom:.5rem}
+.pay-order-item{display:flex;justify-content:space-between;align-items:center;padding:.4rem 0;border-bottom:1px solid var(--border);font-size:.88rem}
+.pay-order-item:last-child{border-bottom:none}
+.pay-order-name{color:var(--text);font-weight:600}
+.pay-order-price{font-family:'Orbitron',monospace;font-size:.85rem;color:var(--accent);font-weight:700}
+.pay-order-total{display:flex;justify-content:space-between;align-items:center;padding:.8rem 0 0;font-size:1rem}
+.pay-order-total span:first-child{font-weight:700;color:var(--white)}
+.pay-order-total span:last-child{font-family:'Orbitron',monospace;font-size:1.1rem;color:var(--accent);font-weight:900}
+.pay-field{margin-bottom:1rem}
+.pay-label{font-family:'Orbitron',monospace;font-size:.65rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:.4rem}
+.pay-input{width:100%;background:var(--surface);border:1px solid var(--border);color:var(--white);font-family:'Rajdhani',sans-serif;font-size:1rem;padding:.75rem 1rem;outline:none;transition:border-color .2s}
+.pay-input:focus{border-color:var(--accent)}
+.pay-input::placeholder{color:var(--muted)}
+.pay-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.pay-methods{display:flex;gap:.6rem;flex-wrap:wrap;margin-bottom:1rem}
+.pay-method{border:1.5px solid var(--border);padding:.7rem 1.1rem;cursor:pointer;display:flex;align-items:center;gap:.5rem;font-family:'Orbitron',monospace;font-size:.7rem;font-weight:700;letter-spacing:.08em;color:var(--muted);transition:all .2s;background:var(--surface)}
+.pay-method:hover{border-color:var(--accent);color:var(--white)}
+.pay-method.selected{border-color:var(--accent);color:var(--accent);background:rgba(232,255,0,.06)}
+.pay-method-icon{font-size:1.1rem}
+.pay-card-fields,.pay-upi-field,.pay-cod-note{display:none}
+.pay-card-fields.show,.pay-upi-field.show,.pay-cod-note.show{display:block}
+.pay-cod-note{background:rgba(82,176,67,.08);border:1px solid rgba(82,176,67,.2);padding:1rem;font-size:.9rem;color:var(--xbox-glow);line-height:1.6}
+.pay-confirm{width:100%;font-family:'Orbitron',monospace;font-size:.85rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;background:var(--accent);color:var(--bg);border:none;padding:1.1rem;cursor:pointer;margin-top:1.2rem;transition:transform .15s,background .2s}
+.pay-confirm:hover{transform:translateY(-2px)}
+.pay-confirm:disabled{opacity:.4;cursor:default;transform:none}
+/* Success screen */
+.pay-success{display:none;flex-direction:column;align-items:center;justify-content:center;padding:3rem 2rem;text-align:center}
+.pay-success.show{display:flex}
+.pay-success-icon{font-size:4rem;margin-bottom:1.5rem;animation:pop .4s ease}
+@keyframes pop{0%{transform:scale(0)}80%{transform:scale(1.15)}100%{transform:scale(1)}}
+.pay-success-title{font-family:'Orbitron',monospace;font-weight:900;font-size:1.4rem;color:var(--accent);letter-spacing:.05em;margin-bottom:.8rem}
+.pay-success-msg{font-size:1rem;color:var(--muted);line-height:1.7;max-width:340px;margin-bottom:.5rem}
+.pay-success-id{font-family:'Share Tech Mono',monospace;font-size:.8rem;color:var(--muted);letter-spacing:.15em;margin-top:.5rem}
+.pay-success-close{margin-top:2rem;font-family:'Orbitron',monospace;font-size:.75rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;background:var(--accent);color:var(--bg);border:none;padding:.8rem 2rem;cursor:pointer}
+
+/* CART SIDEBAR */
+.cart-overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:300;opacity:0;pointer-events:none;transition:opacity .3s;backdrop-filter:blur(4px)}
+.cart-overlay.open{opacity:1;pointer-events:all}
+.cart-sidebar{position:fixed;top:0;right:0;width:380px;max-width:95vw;height:100vh;background:var(--card);border-left:1px solid var(--border);z-index:301;display:flex;flex-direction:column;transform:translateX(100%);transition:transform .35s cubic-bezier(.4,0,.2,1)}
+.cart-sidebar.open{transform:translateX(0)}
+.cart-header{display:flex;align-items:center;justify-content:space-between;padding:1.5rem;border-bottom:1px solid var(--border);flex-shrink:0}
+.cart-title{font-family:'Orbitron',monospace;font-weight:700;font-size:1rem;letter-spacing:.1em;color:var(--white)}
+.cart-close{background:transparent;border:1.5px solid var(--border);color:var(--muted);width:32px;height:32px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:border-color .2s,color .2s;font-size:1rem}
+.cart-close:hover{border-color:var(--accent2);color:var(--accent2)}
+.cart-items{flex:1;overflow-y:auto;padding:1rem}
+.cart-empty{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;text-align:center;padding:2rem}
+.cart-item{display:flex;gap:.8rem;padding:.9rem;border:1px solid var(--border);margin-bottom:.6rem;background:var(--surface);position:relative}
+.cart-item-icon{font-size:2rem;width:50px;height:50px;display:flex;align-items:center;justify-content:center;flex-shrink:0;border-radius:4px}
+.cart-item-info{flex:1;min-width:0}
+.cart-item-title{font-family:'Orbitron',monospace;font-size:.72rem;font-weight:700;color:var(--white);margin-bottom:.2rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cart-item-plat{font-size:.75rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;margin-bottom:.3rem}
+.cart-item-price{font-family:'Orbitron',monospace;font-size:.9rem;font-weight:900;color:var(--accent)}
+.cart-item-remove{position:absolute;top:.5rem;right:.5rem;background:transparent;border:none;color:var(--muted);font-size:1rem;cursor:pointer;transition:color .2s;line-height:1}
+.cart-item-remove:hover{color:var(--accent2)}
+.cart-footer{padding:1.2rem;border-top:1px solid var(--border);flex-shrink:0}
+.cart-total-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:.5rem;font-size:.9rem;color:var(--muted)}
+.cart-clear{width:100%;margin-top:.8rem;background:transparent;border:1px solid var(--border);color:var(--muted);font-family:'Orbitron',monospace;font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;padding:.6rem;cursor:pointer;transition:border-color .2s,color .2s}
+.cart-clear:hover{border-color:var(--accent2);color:var(--accent2)}
+
+/* RESPONSIVE */
+@media(max-width:1100px){.hero{grid-template-columns:1fr}.hero-visual{display:none}.consoles-grid{grid-template-columns:1fr}.accessories-grid{grid-template-columns:repeat(2,1fr)}.why-grid{grid-template-columns:repeat(2,1fr)}.footer-top{grid-template-columns:1fr 1fr}}
+@media(max-width:640px){nav{padding:0 1rem}.nav-links,.search-bar-nav{display:none}section{padding:60px 1.2rem}.games-grid{grid-template-columns:repeat(2,1fr)}.accessories-grid{grid-template-columns:1fr}.why-grid{grid-template-columns:1fr}.footer-top{grid-template-columns:1fr}.nl-form{flex-direction:column}.deals-banner{grid-template-columns:1fr}.hero-stats{gap:1.5rem;flex-wrap:wrap}.platform-filter{gap:.4rem}.games-search{display:none}}
+</style>
+</head>
+<body>
+
+
+
+<!-- PAYMENT MODAL -->
+<div class="pay-overlay" id="payOverlay">
+  <div class="pay-modal" id="payModal">
+    <button class="pay-close" id="payClose">✕</button>
+
+    <!-- SUCCESS SCREEN -->
+    <div class="pay-success" id="paySuccess">
+      <div class="pay-success-icon">✅</div>
+      <div class="pay-success-title">ORDER PLACED!</div>
+      <div class="pay-success-msg">Thank you for your order! We have received your details and will contact you shortly to confirm delivery.</div>
+      <div class="pay-success-id" id="payOrderId"></div>
+      <button class="pay-success-close" onclick="closePayment();clearCartAfterOrder()">CONTINUE SHOPPING</button>
+    </div>
+
+    <!-- FORM -->
+    <div id="payForm">
+      <div class="pay-header">
+        <div class="pay-title">CHECKOUT</div>
+        <div class="pay-subtitle">Complete your order — fast &amp; secure</div>
+      </div>
+      <div class="pay-body">
+
+        <!-- Order Summary -->
+        <div class="pay-section-title">📦 Order Summary</div>
+        <div class="pay-order-summary" id="payOrderSummary"></div>
+
+        <!-- Customer Details -->
+        <div class="pay-section-title">👤 Your Details</div>
+        <div class="pay-field">
+          <label class="pay-label">Full Name</label>
+          <input class="pay-input" id="payName" placeholder="Enter your full name" type="text"/>
+        </div>
+        <div class="pay-row">
+          <div class="pay-field">
+            <label class="pay-label">Phone Number</label>
+            <input class="pay-input" id="payPhone" placeholder="+91 XXXXX XXXXX" type="tel"/>
+          </div>
+          <div class="pay-field">
+            <label class="pay-label">Email Address</label>
+            <input class="pay-input" id="payEmail" placeholder="you@email.com" type="email"/>
+          </div>
+        </div>
+        <div class="pay-field">
+          <label class="pay-label">Delivery Address</label>
+          <input class="pay-input" id="payAddress" placeholder="House No, Street, City, State, PIN" type="text"/>
+        </div>
+
+        <!-- Payment Method -->
+        <div class="pay-section-title">💳 Payment Method</div>
+        <div class="pay-methods">
+          <div class="pay-method" data-method="card" onclick="selectPayMethod(this)"><span class="pay-method-icon">💳</span> CARD</div>
+          <div class="pay-method" data-method="upi" onclick="selectPayMethod(this)"><span class="pay-method-icon">📱</span> UPI</div>
+          <div class="pay-method" data-method="cod" onclick="selectPayMethod(this)"><span class="pay-method-icon">💵</span> CASH ON DELIVERY</div>
+        </div>
+
+        <!-- Card Fields -->
+        <div class="pay-card-fields" id="payCardFields">
+          <div class="pay-field">
+            <label class="pay-label">Card Number</label>
+            <input class="pay-input" id="payCardNum" placeholder="XXXX  XXXX  XXXX  XXXX" maxlength="19" type="text"/>
+          </div>
+          <div class="pay-row">
+            <div class="pay-field">
+              <label class="pay-label">Expiry Date</label>
+              <input class="pay-input" id="payExpiry" placeholder="MM / YY" maxlength="7" type="text"/>
+            </div>
+            <div class="pay-field">
+              <label class="pay-label">CVV</label>
+              <input class="pay-input" id="payCvv" placeholder="•••" maxlength="3" type="password"/>
+            </div>
+          </div>
+          <div class="pay-field">
+            <label class="pay-label">Name on Card</label>
+            <input class="pay-input" id="payCardName" placeholder="As printed on card" type="text"/>
+          </div>
+        </div>
+
+        <!-- UPI Field -->
+        <div class="pay-upi-field" id="payUpiField">
+          <div class="pay-field">
+            <label class="pay-label">UPI ID</label>
+            <input class="pay-input" id="payUpiId" placeholder="yourname@upi" type="text"/>
+          </div>
+        </div>
+
+        <!-- COD Note -->
+        <div class="pay-cod-note" id="payCodNote">
+          🚚 Pay when your order arrives at your doorstep. Our delivery partner will collect the payment in cash or by card. Delivery within 2–4 working days.
+        </div>
+
+        <button class="pay-confirm" id="payConfirmBtn" onclick="confirmOrder()">CONFIRM &amp; PLACE ORDER</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CART SIDEBAR -->
+<div class="cart-overlay" id="cartOverlay"></div>
+<div class="cart-sidebar" id="cartSidebar">
+  <div class="cart-header">
+    <div class="cart-title">🛒 YOUR CART</div>
+    <button class="cart-close" id="cartClose">✕</button>
+  </div>
+  <div class="cart-items" id="cartItems">
+    <div class="cart-empty" id="cartEmpty">
+      <div style="font-size:3rem;margin-bottom:1rem">🎮</div>
+      <div style="font-family:'Orbitron',monospace;font-size:.85rem;color:var(--muted)">Your cart is empty.<br>Add some games!</div>
+    </div>
+  </div>
+  <div class="cart-footer" id="cartFooter" style="display:none">
+    <div class="cart-total-row"><span>Subtotal</span><span id="cartSubtotal">AED 0</span></div>
+    <div class="cart-total-row"><span>Delivery</span><span style="color:var(--xbox-glow)">FREE</span></div>
+    <div class="cart-total-row" style="border-top:1px solid var(--border);padding-top:.8rem;margin-top:.5rem">
+      <span style="font-weight:700;color:var(--white)">Total</span>
+      <span id="cartTotal" style="font-family:'Orbitron',monospace;font-size:1.2rem;color:var(--accent)">AED 0</span>
+    </div>
+    <button class="btn-primary" style="width:100%;margin-top:1.2rem;font-size:.85rem" onclick="closeCart();openPayment()">PROCEED TO PAYMENT →</button>
+    <button class="cart-clear" id="cartClear">Clear Cart</button>
+  </div>
+</div>
+
+<!-- GAME MODAL -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal" id="gameModal">
+    <button class="modal-close" id="modalClose">✕</button>
+    <div class="modal-cover" id="modalCover"></div>
+    <div class="modal-body">
+      <div class="modal-tags" id="modalTags"></div>
+      <div class="modal-title" id="modalTitle"></div>
+      <div class="modal-meta" id="modalMeta"></div>
+      <div class="modal-stars" id="modalStars"></div>
+      <div class="modal-desc" id="modalDesc"></div>
+      <div class="platform-select-label">SELECT PLATFORM</div>
+      <div class="platform-options" id="platformOptions"></div>
+      <button class="modal-add" id="modalAddCart" disabled>SELECT A PLATFORM FIRST</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#">ALZAH<span>RA</span></a>
+  <ul class="nav-links">
+    <li><a href="#consoles">Consoles</a></li>
+    <li><a href="#games">Games</a></li>
+    <li><a href="#accessories">Accessories</a></li>
+    <li><a href="#deals">Deals</a></li>
+  </ul>
+  <div class="nav-right">
+    <div class="search-bar-nav">
+      <svg width="14" height="14" fill="none" stroke="#6b7280" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <input type="text" id="navSearch" placeholder="Search games…"/>
+    </div>
+    <button class="btn-cart" id="cartBtn">🛒 Cart (0)</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-text">
+    <p class="hero-eyebrow">Next-Gen Gaming HQ</p>
+    <h1>PLAY<br>BEYOND<br><span class="hl">LIMITS</span></h1>
+    <p class="hero-desc">The ultimate destination for PS5, PS4, Xbox Series X and every game that defines a generation. Hardware. Software. No compromises.</p>
+    <div class="hero-btns">
+      <button class="btn-primary" onclick="document.getElementById('games').scrollIntoView({behavior:'smooth'})">Shop Games</button>
+      <button class="btn-secondary" onclick="document.getElementById('consoles').scrollIntoView({behavior:'smooth'})">View Consoles</button>
+    </div>
+    <div class="hero-stats">
+      <div><div class="stat-num">80<span>+</span></div><div class="stat-label">Games in Stock</div></div>
+      <div><div class="stat-num">3<span>K+</span></div><div class="stat-label">Happy Gamers</div></div>
+      <div><div class="stat-num">48<span>hr</span></div><div class="stat-label">Fast Delivery</div></div>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="console-showcase">
+      <div class="cc cc-ps5"><span class="cc-icon">🎮</span><div class="cc-name">PS5</div><div class="cc-tag">Play Has No Limits</div><div class="cc-price">FROM AED 1,999</div></div>
+      <div class="cc cc-xbox"><span class="cc-icon">🕹️</span><div class="cc-name">XBOX</div><div class="cc-tag">Power Your Dreams</div><div class="cc-price cc-price-x">FROM AED 1,999</div></div>
+      <div class="cc cc-ps4"><span class="cc-icon">🎯</span><div class="cc-name">PS4</div><div class="cc-tag">Greatness Awaits</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker-wrap"><div class="ticker-track">
+  <span>★ PS5 NOW IN STOCK</span><span>★ FREE SHIPPING OVER AED 150</span><span>★ XBOX SERIES X AVAILABLE</span><span>★ TRADE-IN & SAVE</span><span>★ 80+ GAMES IN STOCK</span><span>★ EXCLUSIVE BUNDLES</span><span>★ NEW RELEASES WEEKLY</span><span>★ EASY EMI OPTIONS</span>
+  <span>★ PS5 NOW IN STOCK</span><span>★ FREE SHIPPING OVER AED 150</span><span>★ XBOX SERIES X AVAILABLE</span><span>★ TRADE-IN & SAVE</span><span>★ 80+ GAMES IN STOCK</span><span>★ EXCLUSIVE BUNDLES</span><span>★ NEW RELEASES WEEKLY</span><span>★ EASY EMI OPTIONS</span>
+</div></div>
+
+<!-- CONSOLES -->
+<section id="consoles">
+  <div class="section-header">
+    <div><p class="section-label">// Hardware</p><h2>Choose Your <em>Console</em></h2></div>
+    <a href="#" class="see-all">View All →</a>
+  </div>
+  <div class="consoles-grid">
+    <div class="console-feature ps5 reveal">
+      <span class="cf-icon">🎮</span>
+      <div class="cf-name">PlayStation 5</div>
+      <div class="cf-sub">Next-Gen Power</div>
+      <p class="cf-desc">Experience lightning-fast loading with an ultra-high speed SSD, deeper immersion with haptic feedback, adaptive triggers and 3D Audio.</p>
+      <ul class="cf-specs">
+        <li><span>CPU</span><span>AMD Zen 2 — 8 Cores</span></li>
+        <li><span>GPU</span><span>10.28 TFLOPS RDNA 2</span></li>
+        <li><span>RAM</span><span>16 GB GDDR6</span></li>
+        <li><span>Storage</span><span>825 GB Custom SSD</span></li>
+        <li><span>Output</span><span>4K @ 120fps</span></li>
+      </ul>
+      <div class="cf-price">AED 1,999 <small>Standard Edition</small></div>
+      <button class="btn-primary" onclick="addConsoleToCart('PlayStation 5','PS5','🎮',1999)">Add to Cart</button>
+    </div>
+    <div class="console-feature ps4 reveal reveal-delay-1">
+      <span class="cf-icon">🕹️</span>
+      <div class="cf-name">PlayStation 4</div>
+      <div class="cf-sub">Greatness Awaits</div>
+      <p class="cf-desc">A massive library of acclaimed exclusives, incredible titles, and PlayStation Network — the best gaming experience at a great price.</p>
+      <ul class="cf-specs">
+        <li><span>CPU</span><span>AMD Jaguar — 8 Cores</span></li>
+        <li><span>GPU</span><span>1.84 TFLOPS GCN</span></li>
+        <li><span>RAM</span><span>8 GB GDDR5</span></li>
+        <li><span>Storage</span><span>500 GB / 1 TB HDD</span></li>
+        <li><span>Output</span><span>1080p @ 60fps</span></li>
+      </ul>
+      <div class="cf-price">AED 899 <small>Slim Edition</small></div>
+      <button class="btn-primary" onclick="addConsoleToCart('PlayStation 4','PS4','🕹️',899)">Add to Cart</button>
+    </div>
+    <div class="console-feature xbox reveal reveal-delay-2">
+      <span class="cf-icon">🎯</span>
+      <div class="cf-name">Xbox Series X</div>
+      <div class="cf-sub">Power Your Dreams</div>
+      <p class="cf-desc">The most powerful Xbox ever. Thousands of games. Xbox Game Pass Ultimate. Play games from four generations with backward compatibility.</p>
+      <ul class="cf-specs">
+        <li><span>CPU</span><span>AMD Zen 2 — 8 Cores</span></li>
+        <li><span>GPU</span><span>12 TFLOPS RDNA 2</span></li>
+        <li><span>RAM</span><span>16 GB GDDR6</span></li>
+        <li><span>Storage</span><span>1 TB Custom NVMe</span></li>
+        <li><span>Output</span><span>4K @ 120fps</span></li>
+      </ul>
+      <div class="cf-price">AED 1,999 <small>Carbon Black</small></div>
+      <button class="btn-primary" onclick="addConsoleToCart('Xbox Series X','Xbox','🎯',1999)">Add to Cart</button>
+    </div>
+  </div>
+</section>
+
+<!-- GAMES -->
+<section id="games">
+  <div class="section-header">
+    <div><p class="section-label">// Software</p><h2>All <em>Games</em></h2></div>
+  </div>
+  <div style="display:flex;align-items:center;flex-wrap:wrap;gap:.8rem;margin-bottom:1.8rem">
+    <div class="platform-filter" id="platformFilter">
+      <button class="pf-btn active" data-filter="all">All Platforms</button>
+      <button class="pf-btn" data-filter="PS5">PS5</button>
+      <button class="pf-btn" data-filter="PS4">PS4</button>
+      <button class="pf-btn" data-filter="Xbox">Xbox</button>
+    </div>
+    <div class="games-search" style="margin-left:auto">
+      <svg width="14" height="14" fill="none" stroke="#6b7280" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <input type="text" id="gameSearch" placeholder="Search game…"/>
+    </div>
+    <span class="games-count" id="gamesCount"></span>
+  </div>
+  <div class="games-grid" id="gamesGrid"></div>
+</section>
+
+<!-- DEALS -->
+<div id="deals" class="deals-banner">
+  <div>
+    <p class="deals-label">// Limited Time</p>
+    <h2 class="deals-heading">WEEKEND<br>FLASH DEALS</h2>
+    <p class="deals-sub">Up to 40% off on select titles. Every Friday through Sunday.</p>
+  </div>
+  <button class="deals-btn">Shop Deals →</button>
+</div>
+
+<!-- ACCESSORIES -->
+<section id="accessories">
+  <div class="section-header">
+    <div><p class="section-label">// Gear Up</p><h2>Must-Have <em>Accessories</em></h2></div>
+    <a href="#" class="see-all">View All →</a>
+  </div>
+  <div class="accessories-grid">
+    <div class="acc-card reveal"><div class="acc-thumb" style="background:linear-gradient(135deg,#050a1a,#0d1929);font-size:2.5rem">🎮</div><div class="acc-name">DualSense Controller</div><div class="acc-compat">PS5</div><div class="acc-price">AED 279</div></div>
+    <div class="acc-card reveal reveal-delay-1"><div class="acc-thumb" style="background:linear-gradient(135deg,#0a0520,#1a0a40);font-size:2.5rem">🎧</div><div class="acc-name">Pulse 3D Headset</div><div class="acc-compat">PS4 / PS5</div><div class="acc-price">AED 349</div></div>
+    <div class="acc-card reveal reveal-delay-2"><div class="acc-thumb" style="background:linear-gradient(135deg,#061006,#0a1a0a);font-size:2.5rem">🕹️</div><div class="acc-name">Xbox Elite Controller</div><div class="acc-compat">Xbox Series X/S</div><div class="acc-price">AED 649</div></div>
+    <div class="acc-card reveal reveal-delay-3"><div class="acc-thumb" style="background:linear-gradient(135deg,#050508,#0f0f20);font-size:2.5rem">💾</div><div class="acc-name">Seagate 1TB SSD</div><div class="acc-compat">PS5 / Xbox</div><div class="acc-price">AED 549</div></div>
+    <div class="acc-card reveal"><div class="acc-thumb" style="background:linear-gradient(135deg,#0a0505,#200a0a);font-size:2.5rem">⚡</div><div class="acc-name">Dual Charging Dock</div><div class="acc-compat">DualSense</div><div class="acc-price">AED 145</div></div>
+    <div class="acc-card reveal reveal-delay-1"><div class="acc-thumb" style="background:linear-gradient(135deg,#050a10,#0a1a30);font-size:2.5rem">🖥️</div><div class="acc-name">HD Camera</div><div class="acc-compat">PS5</div><div class="acc-price">AED 219</div></div>
+    <div class="acc-card reveal reveal-delay-2"><div class="acc-thumb" style="background:linear-gradient(135deg,#061006,#0a2010);font-size:2.5rem">🎙️</div><div class="acc-name">Xbox Stereo Headset</div><div class="acc-compat">Xbox</div><div class="acc-price">AED 199</div></div>
+    <div class="acc-card reveal reveal-delay-3"><div class="acc-thumb" style="background:linear-gradient(135deg,#0a0808,#1a1010);font-size:2.5rem">📦</div><div class="acc-name">Gaming Bundle Pack</div><div class="acc-compat">All Consoles</div><div class="acc-price">AED 389</div></div>
+  </div>
+</section>
+
+<!-- WHY -->
+<section id="why">
+  <div class="section-header"><div><p class="section-label">// Why ALZAHRA</p><h2>The ALZAHRA <em>Advantage</em></h2></div></div>
+  <div class="why-grid">
+    <div class="why-item reveal"><div class="why-num">01</div><span class="why-icon">🚀</span><div class="why-title">Fast Delivery</div><p class="why-desc">Order before 3PM and get your console or game delivered next business day. Free shipping on orders above AED 150.</p></div>
+    <div class="why-item reveal reveal-delay-1"><div class="why-num">02</div><span class="why-icon">🛡️</span><div class="why-title">Genuine Products</div><p class="why-desc">Every console and accessory is 100% authentic, sourced directly from Sony and Microsoft authorized distributors.</p></div>
+    <div class="why-item reveal reveal-delay-2"><div class="why-num">03</div><span class="why-icon">🔄</span><div class="why-title">Easy Returns</div><p class="why-desc">Not happy? Return within 7 days for a full refund, no questions asked. Support is available 24/7.</p></div>
+    <div class="why-item reveal reveal-delay-3"><div class="why-num">04</div><span class="why-icon">💎</span><div class="why-title">Best Price Guarantee</div><p class="why-desc">Found it cheaper elsewhere? We'll match the price. ALZAHRA members get exclusive early-access deals and loyalty points.</p></div>
+  </div>
+</section>
+
+<!-- NEWSLETTER -->
+<section class="newsletter">
+  <p class="nl-label">// Stay in the Loop</p>
+  <h2 class="nl-heading">Level Up Your Inbox</h2>
+  <p class="nl-sub">Get notified about new releases, exclusive deals, and restocks. Sent directly to us!</p>
+  <!-- Replace YOUR_EMAIL_HERE with your actual email address -->
+  <div class="nl-form">
+    <input class="nl-input" type="text" id="nlEmail" placeholder="your@email.com" autocomplete="email"/>
+    <button class="btn-primary" id="nlBtn">Subscribe</button>
+  </div>
+  <div class="nl-msg" id="nlMsg">✓ You're subscribed! Welcome to ALZAHRA.</div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <a class="nav-logo" href="#">ALZAH<span>RA</span></a>
+      <p class="footer-desc">Your ultimate destination for gaming consoles, games, and accessories. Play beyond limits.</p>
+    </div>
+    <div class="footer-col"><h4>Consoles</h4><ul><li><a href="#">PlayStation 5</a></li><li><a href="#">PlayStation 4</a></li><li><a href="#">Xbox Series X</a></li><li><a href="#">Xbox Series S</a></li><li><a href="#">Console Bundles</a></li></ul></div>
+    <div class="footer-col"><h4>Games</h4><ul><li><a href="#">New Releases</a></li><li><a href="#">Best Sellers</a></li><li><a href="#">PS5 Exclusives</a></li><li><a href="#">Xbox Exclusives</a></li><li><a href="#">Under AED 999</a></li></ul></div>
+    <div class="footer-col"><h4>Support</h4><ul><li><a href="#">Track Order</a></li><li><a href="#">Returns Policy</a></li><li><a href="#">Warranty</a></li><li><a href="#">Contact Us</a></li><li><a href="#">FAQ</a></li></ul></div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-copy">© 2025 ALZAHRA Gaming Store. All rights reserved.</div>
+    <div class="footer-plats"><span class="plat-badge">PS5</span><span class="plat-badge">PS4</span><span class="plat-badge">Xbox</span></div>
+  </div>
+</footer>
+
+<script>
+// ─── GAME DATABASE ───────────────────────────────────────────
+const GAMES = [
+  // PS5 EXCLUSIVES
+  {id:1,steam_id:null,title:"Demon's Souls",genre:"Action RPG",icon:"💀",colors:["#1a0506","#3a0a10"],platforms:{PS5:169},rating:5,year:2020,desc:"A complete remake of the classic dark fantasy RPG. Battle through intricate worlds to restore order and face legendary bosses."},
+  {id:2,steam_id:1649240,title:"Returnal",genre:"Roguelike Shooter",icon:"🔄",colors:["#050a1a","#0a1a3a"],platforms:{PS5:199},rating:5,year:2021,desc:"Fight through a time loop on an alien planet. Each death brings new knowledge. Intense third-person shooter with roguelike elements."},
+  {id:3,steam_id:1845910,title:"Ratchet & Clank: Rift Apart",genre:"Action Platformer",icon:"🔫",colors:["#0a0520","#1a0a40"],platforms:{PS5:169},rating:5,year:2021,desc:"Blast across dimensions in a brand new adventure with Ratchet, Clank, and a mysterious new female Lombax."},
+  {id:4,steam_id:null,title:"Stellar Blade",genre:"Action RPG",icon:"⚡",colors:["#0a0515","#1a0835"],platforms:{PS5:199},rating:4,year:2024,desc:"Lead EVE on a mission to reclaim Earth from fearsome monsters. Stylish combat and breathtaking visuals exclusive to PS5."},
+  {id:5,steam_id:null,title:"Astro's Playroom",genre:"Platformer",icon:"🤖",colors:["#051520","#0a3040"],platforms:{PS5:0},rating:5,year:2020,desc:"Pre-installed on every PS5! A love letter to PlayStation history with mind-blowing DualSense haptics. FREE with PS5."},
+  {id:6,steam_id:null,title:"Gran Turismo 7",genre:"Racing Sim",icon:"🏎️",colors:["#100a05","#2a1505"],platforms:{PS4:149,PS5:169},rating:5,year:2022,desc:"The most authentic racing simulation on console. Over 400 cars, stunning tracks, and the return of the beloved GT campaign."},
+  {id:7,steam_id:1888930,title:"The Last of Us Part I",genre:"Action Adventure",icon:"🍄",colors:["#050f05","#0a2010"],platforms:{PS5:199},rating:5,year:2022,desc:"Experience Joel and Ellie's journey across a post-pandemic America, rebuilt from the ground up for PS5."},
+  {id:8,steam_id:2420110,title:"Horizon Forbidden West",genre:"Action RPG",icon:"🦅",colors:["#051510","#0a2a20"],platforms:{PS4:149,PS5:169},rating:5,year:2022,desc:"Aloy battles powerful enemies in a far-future America. Explore lush jungles, sunken cities, and snow-capped mountains."},
+  {id:9,steam_id:1680940,title:"Forspoken",genre:"Action RPG",icon:"✨",colors:["#100515","#1a0a2a"],platforms:{PS5:129},rating:3,year:2023,desc:"Transported from New York to a fantastical world, Frey must harness magical abilities to survive in this action RPG."},
+
+  // PS4 EXCLUSIVES
+  {id:10,steam_id:1593500,title:"God of War",genre:"Action Adventure",icon:"⚔️",colors:["#0a0505","#200a0a"],platforms:{PS4:89},rating:5,year:2018,desc:"Kratos and his son Atreus journey through Norse mythology in this epic, emotional masterpiece. Winner of over 200 GOTY awards."},
+  {id:11,steam_id:1817070,title:"Marvel's Spider-Man",genre:"Action Adventure",icon:"🕷️",colors:["#050a1a","#0a1535"],platforms:{PS4:89},rating:5,year:2018,desc:"Swing through New York as Peter Parker, facing iconic villains in a brand-new Marvel story. The definitive Spider-Man game."},
+  {id:12,steam_id:1151640,title:"Horizon Zero Dawn",genre:"Action RPG",icon:"🦕",colors:["#050f05","#0a2010"],platforms:{PS4:65},rating:5,year:2017,desc:"Explore a lush, post-apocalyptic Earth overrun by robotic creatures. Uncover the mysteries of this stunning world as Aloy."},
+  {id:13,steam_id:null,title:"The Last of Us Part II",genre:"Action Adventure",icon:"🏹",colors:["#050f05","#082008"],platforms:{PS4:109},rating:5,year:2020,desc:"Ellie sets out on a harrowing and relentless pursuit across a brutal world in a morally complex story of love and vengeance."},
+  {id:14,steam_id:2215430,title:"Ghost of Tsushima",genre:"Action Adventure",icon:"⛩️",colors:["#050505","#101010"],platforms:{PS4:109},rating:5,year:2020,desc:"Become a samurai warrior in feudal Japan. Master the Ghost's art of deception and innovative combat to save Tsushima."},
+  {id:15,steam_id:null,title:"Bloodborne",genre:"Action RPG",icon:"🗡️",colors:["#0a0505","#180808"],platforms:{PS4:65},rating:5,year:2015,desc:"Hunt your nightmares in a dark gothic city. Fast, brutal combat and Lovecraftian horror blend in FromSoftware's masterpiece."},
+  {id:16,steam_id:1659420,title:"Uncharted 4",genre:"Action Adventure",icon:"🗺️",colors:["#0a0804","#1a1208"],platforms:{PS4:89},rating:5,year:2016,desc:"Nathan Drake's final adventure takes him around the world in search of a legendary pirate treasure. Cinematic brilliance."},
+  {id:17,steam_id:1222140,title:"Detroit: Become Human",genre:"Narrative",icon:"🤖",colors:["#050a10","#0a1825"],platforms:{PS4:65},rating:4,year:2018,desc:"Control the fate of three androids in a branching story that changes based on your choices. The future of humanity is yours."},
+  {id:18,steam_id:1259420,title:"Days Gone",genre:"Action Survival",icon:"🧟",colors:["#050a05","#0a1508"],platforms:{PS4:89},rating:4,year:2019,desc:"Ride and survive in a post-pandemic world overrun by Freakers. Massive open world with thrilling horde encounters."},
+  {id:19,steam_id:1190460,title:"Death Stranding",genre:"Action Adventure",icon:"👶",colors:["#050808","#0a1515"],platforms:{PS4:89,PS5:109},rating:4,year:2019,desc:"Hideo Kojima's unique journey to reconnect a fractured society. Carry cargo across a breathtaking, desolate America."},
+  {id:20,steam_id:1687950,title:"Persona 5 Royal",genre:"JRPG",icon:"🎭",colors:["#1a0505","#300808"],platforms:{PS4:109,PS5:129,Xbox:129},rating:5,year:2022,desc:"The definitive edition of the acclaimed JRPG. Lead the Phantom Thieves on stylish turn-based battles across Tokyo."},
+  {id:21,steam_id:1462040,title:"Final Fantasy VII Remake",genre:"Action RPG",icon:"🌸",colors:["#050510","#0a0a20"],platforms:{PS4:109,PS5:129},rating:5,year:2020,desc:"Cloud Strife's iconic story reborn. Real-time combat, stunning visuals, and an expanded narrative of the classic RPG."},
+  {id:22,steam_id:null,title:"Shadow of the Colossus",genre:"Action Adventure",icon:"🏔️",colors:["#0a0805","#1a1208"],platforms:{PS4:65},rating:5,year:2018,desc:"Remake of the classic masterpiece. Scale and battle colossal creatures across a haunting, barren landscape."},
+
+  // XBOX EXCLUSIVES
+  {id:23,steam_id:1240440,title:"Halo Infinite",genre:"FPS Shooter",icon:"🔵",colors:["#051020","#0a2040"],platforms:{Xbox:89},rating:4,year:2021,desc:"Master Chief returns in the most expansive Halo game yet. Grapple across an open world ring, fight the Banished, and protect humanity."},
+  {id:24,steam_id:1551360,title:"Forza Horizon 5",genre:"Racing",icon:"🏁",colors:["#050a05","#0a1a08"],platforms:{Xbox:149},rating:5,year:2021,desc:"Race across a stunning open world set in Mexico with over 500 cars, incredible festivals, and endless variety."},
+  {id:25,steam_id:2440510,title:"Forza Motorsport",genre:"Racing Sim",icon:"🏆",colors:["#0a0505","#1a0808"],platforms:{Xbox:169},rating:4,year:2023,desc:"The most technically advanced Forza ever. Real-time ray tracing and over 500 cars rebuilt from scratch."},
+  {id:26,steam_id:1716740,title:"Starfield",genre:"Sci-Fi RPG",icon:"🚀",colors:["#050508","#0a0a15"],platforms:{Xbox:129},rating:4,year:2023,desc:"Explore over 1000 planets across the galaxy in Bethesda's epic space RPG. Build your ship and chart your own destiny."},
+  {id:27,steam_id:null,title:"Hi-Fi Rush",genre:"Rhythm Action",icon:"🎵",colors:["#1a0a05","#300f08"],platforms:{Xbox:89,PS5:89},rating:5,year:2023,desc:"Rock out to the beat in this charming rhythm action game! Fight evil corporations with music-synced combat."},
+  {id:28,steam_id:1172620,title:"Sea of Thieves",genre:"Adventure",icon:"🏴‍☠️",colors:["#050a10","#081525"],platforms:{Xbox:109},rating:4,year:2018,desc:"Be the pirate you want to be in this shared-world adventure. Sail, plunder, and forge legends with friends."},
+  {id:29,steam_id:1250410,title:"Microsoft Flight Sim",genre:"Simulation",icon:"✈️",colors:["#050a15","#081a2a"],platforms:{Xbox:169},rating:5,year:2020,desc:"The entire Earth recreated as your playground. Fly hundreds of aircraft anywhere in the world with breathtaking realism."},
+  {id:30,steam_id:1057090,title:"Ori: Will of the Wisps",genre:"Platformer",icon:"🌿",colors:["#050a08","#081a10"],platforms:{Xbox:65},rating:5,year:2020,desc:"A gorgeous, emotional platformer with stunning visuals and tight controls. Journey to discover Ori's true destiny."},
+
+  // MULTI-PLATFORM
+  {id:31,steam_id:2322010,title:"God of War Ragnarök",genre:"Action Adventure",icon:"🪓",colors:["#0a0505","#1f0a0a"],platforms:{PS4:149,PS5:169},rating:5,year:2022,desc:"Kratos and Atreus brave the dangers of Norse mythology's apocalypse. An emotional, brutal, and beautiful sequel."},
+  {id:32,steam_id:null,title:"Marvel's Spider-Man 2",genre:"Action Adventure",icon:"🕸️",colors:["#050a1a","#0a1535"],platforms:{PS5:199},rating:5,year:2023,desc:"Play as both Peter Parker and Miles Morales in the most ambitious Spider-Man game yet, featuring Venom."},
+  {id:33,steam_id:1245620,title:"Elden Ring",genre:"Action RPG",icon:"🌑",colors:["#080805","#151208"],platforms:{PS4:129,PS5:149,Xbox:129},rating:5,year:2022,desc:"FromSoftware's epic open-world RPG. Explore the Lands Between, battle demigods, and claim the Elden Ring."},
+  {id:34,steam_id:1091500,title:"Cyberpunk 2077",genre:"Action RPG",icon:"🌆",colors:["#0f0a05","#201508"],platforms:{PS4:89,PS5:129,Xbox:109},rating:4,year:2020,desc:"Become V in the crime-ridden Night City. An immersive open-world RPG with deep customization and a gripping story."},
+  {id:35,steam_id:292030,title:"The Witcher 3",genre:"Action RPG",icon:"🐺",colors:["#080808","#181818"],platforms:{PS4:65,PS5:89,Xbox:65},rating:5,year:2015,desc:"Play as Geralt of Rivia and hunt for your missing adopted daughter in the largest open world in gaming history."},
+  {id:36,steam_id:1174180,title:"Red Dead Redemption 2",genre:"Action Adventure",icon:"🤠",colors:["#0a0805","#1a1208"],platforms:{PS4:89,Xbox:89},rating:5,year:2018,desc:"Experience Arthur Morgan's epic tale across the American frontier. Rockstar's most ambitious and immersive game."},
+  {id:37,steam_id:271590,title:"GTA V",genre:"Action Adventure",icon:"🌴",colors:["#050a05","#0a1808"],platforms:{PS4:65,PS5:89,Xbox:65},rating:4,year:2013,desc:"Three criminals pull off heists across Los Santos in this open-world epic. Plus GTA Online with endless content."},
+  {id:38,steam_id:1196590,title:"Resident Evil Village",genre:"Survival Horror",icon:"🏚️",colors:["#050505","#100808"],platforms:{PS4:109,PS5:129,Xbox:109},rating:5,year:2021,desc:"Ethan Winters travels to a mysterious village to save his daughter. Atmospheric horror with heart-pounding action."},
+  {id:39,steam_id:601150,title:"Devil May Cry 5",genre:"Action",icon:"😈",colors:["#0a0505","#1f0808"],platforms:{PS4:65,Xbox:65,PS5:89},rating:5,year:2019,desc:"Nero, Dante, and the mysterious V battle demonic forces in this stylish hack-and-slash masterpiece."},
+  {id:40,steam_id:582010,title:"Monster Hunter World",genre:"Action RPG",icon:"🐉",colors:["#050a05","#0a1808"],platforms:{PS4:65,Xbox:65},rating:5,year:2018,desc:"Hunt epic monsters across lush ecosystems in this beloved action RPG. Craft gear and rise through the Hunter ranks."},
+  {id:41,steam_id:374320,title:"Dark Souls III",genre:"Action RPG",icon:"🔥",colors:["#050505","#0f0808"],platforms:{PS4:65,Xbox:65},rating:5,year:2016,desc:"The epic conclusion to FromSoftware's Dark Souls trilogy. Face nightmarish enemies and challenging bosses."},
+  {id:42,steam_id:990080,title:"Hogwarts Legacy",genre:"Action RPG",icon:"🪄",colors:["#08050a","#100a18"],platforms:{PS4:129,PS5:149,Xbox:149},rating:4,year:2023,desc:"Live the unwritten in Hogwarts in the 1800s. Attend classes, master spells, and uncover a hidden ancient secret."},
+  {id:43,steam_id:1895780,title:"Star Wars: Jedi Survivor",genre:"Action Adventure",icon:"⚔️",colors:["#050508","#0a0a18"],platforms:{PS4:109,PS5:149,Xbox:149},rating:4,year:2023,desc:"Cal Kestis returns in this action-adventure sequel. Fight the Empire, master new Force abilities, and survive."},
+  {id:44,steam_id:1086940,title:"Baldur's Gate 3",genre:"RPG",icon:"🎲",colors:["#050a05","#0a1a10"],platforms:{PS5:169,Xbox:169},rating:5,year:2023,desc:"The definitive RPG of a generation. 174+ hours of content, true player freedom, and stunning tactical combat."},
+  {id:45,steam_id:1903440,title:"Alan Wake 2",genre:"Action Thriller",icon:"🔦",colors:["#050508","#0a0a18"],platforms:{PS5:149,Xbox:149},rating:5,year:2023,desc:"A psychological horror sequel where Alan Wake writes himself out of the Dark Place. Stunning visuals and storytelling."},
+  {id:46,steam_id:1627720,title:"Lies of P",genre:"Soulslike",icon:"🪆",colors:["#050508","#0a0a15"],platforms:{PS4:109,PS5:129,Xbox:109},rating:4,year:2023,desc:"Play as Pinocchio in this dark reimagining set in Krat. Face brutal enemies with deep customizable combat."},
+  {id:47,steam_id:1888160,title:"Armored Core VI",genre:"Mech Action",icon:"🤖",colors:["#060608","#100f15"],platforms:{PS4:129,PS5:149,Xbox:129},rating:4,year:2023,desc:"Pilot powerful mechs across a despoiled planet in FromSoftware's return to the Armored Core series."},
+  {id:48,steam_id:null,title:"Diablo IV",genre:"Action RPG",icon:"💀",colors:["#0a0505","#180808"],platforms:{PS4:129,PS5:149,Xbox:129},rating:4,year:2023,desc:"Return to Sanctuary and face the forces of Lilith. Endless endgame content, dark atmosphere, and addictive loot."},
+  {id:49,steam_id:2519060,title:"Call of Duty: MW3",genre:"FPS Shooter",icon:"🔫",colors:["#050808","#0a1210"],platforms:{PS4:149,PS5:169,Xbox:169},rating:4,year:2023,desc:"The direct sequel to MW2. Iconic multiplayer, open-world missions, and the beloved Zombies mode return."},
+  {id:50,steam_id:2195250,title:"EA Sports FC 24",genre:"Sports",icon:"⚽",colors:["#050a15","#0a1530"],platforms:{PS4:129,PS5:149,Xbox:149},rating:4,year:2023,desc:"The first EA Sports FC game. HyperMotion V, PlayStyles, and a massive roster of clubs and players worldwide."},
+  {id:51,steam_id:2338770,title:"NBA 2K24",genre:"Sports",icon:"🏀",colors:["#050a05","#0a1808"],platforms:{PS4:129,PS5:149,Xbox:149},rating:3,year:2023,desc:"Kobe Bryant on the cover. New ProPLAY technology brings NBA action to life with unprecedented realism."},
+  {id:52,steam_id:2561660,title:"Assassin's Creed Mirage",genre:"Action Adventure",icon:"🗡️",colors:["#0a0805","#1a1308"],platforms:{PS4:129,PS5:149,Xbox:149},rating:4,year:2023,desc:"Return to the roots of Assassin's Creed. Basim navigates 9th-century Baghdad in this focused stealth adventure."},
+  {id:53,steam_id:null,title:"Far Cry 6",genre:"FPS Action",icon:"🌿",colors:["#050a05","#081808"],platforms:{PS4:89,PS5:109,Xbox:89},rating:3,year:2021,desc:"Fight back against dictator El Presidente in Yara. The most ambitious Far Cry yet with a vibrant open world."},
+  {id:54,steam_id:534380,title:"Dying Light 2",genre:"Action RPG",icon:"🧟",colors:["#050808","#0a1510"],platforms:{PS4:109,PS5:129,Xbox:109},rating:4,year:2022,desc:"Parkour across a post-apocalyptic city ravaged by the undead. Your choices shape this 500-hour open world."},
+  {id:55,steam_id:2050650,title:"Resident Evil 4 Remake",genre:"Survival Horror",icon:"🧟‍♂️",colors:["#050808","#0a1515"],platforms:{PS4:109,PS5:129,Xbox:129},rating:5,year:2023,desc:"The legendary survival horror game reimagined with cutting-edge graphics. Leon rescues the President's daughter."},
+  {id:56,steam_id:1693980,title:"Dead Space Remake",genre:"Sci-Fi Horror",icon:"👾",colors:["#050508","#0a0a18"],platforms:{PS5:129,Xbox:129},rating:5,year:2023,desc:"Isaac Clarke dismembers necromorphs in this complete remake of the 2008 classic. A masterclass in horror gaming."},
+  {id:57,steam_id:1794680,title:"Street Fighter 6",genre:"Fighting",icon:"👊",colors:["#0a0505","#200a08"],platforms:{PS4:129,PS5:149,Xbox:129},rating:5,year:2023,desc:"The definitive modern fighting game. World Tour mode, Battle Hub, and a massive roster of iconic fighters."},
+  {id:58,steam_id:1778820,title:"Tekken 8",genre:"Fighting",icon:"🥊",colors:["#050508","#0a0818"],platforms:{PS4:129,PS5:149,Xbox:129},rating:5,year:2024,desc:"The King of Iron Fist Tournament returns. Stunning visuals, deep mechanics, and a dramatic conclusion to the Mishima saga."},
+  {id:59,steam_id:1971870,title:"Mortal Kombat 1",genre:"Fighting",icon:"💥",colors:["#0a0505","#1a0808"],platforms:{PS4:129,PS5:149,Xbox:129},rating:4,year:2023,desc:"Liu Kang creates a new era in Mortal Kombat. Brutal fatalities, Kameo fighters, and cinematic story mode."},
+  {id:60,steam_id:1475810,title:"Ghostwire: Tokyo",genre:"Action Adventure",icon:"👻",colors:["#050a10","#0a1a25"],platforms:{PS5:109,Xbox:109},rating:4,year:2022,desc:"Cleanse supernatural threats from a mysteriously depopulated Tokyo using elemental abilities and spirit powers."},
+  {id:61,steam_id:668580,title:"Atomic Heart",genre:"FPS RPG",icon:"⚗️",colors:["#050a08","#0a1815"],platforms:{PS4:129,PS5:149,Xbox:129},rating:4,year:2023,desc:"Fight through an alternate-history Soviet Union gone wrong. Fight mutant creatures and killer robots in this FPS RPG."},
+  {id:62,steam_id:1979830,title:"Wo Long: Fallen Dynasty",genre:"Action RPG",icon:"🐉",colors:["#0a0505","#1a0808"],platforms:{PS4:129,PS5:149,Xbox:129},rating:4,year:2023,desc:"Survive the chaos of Han Dynasty China infested with demons in this intense action RPG from Team Ninja."},
+  {id:63,steam_id:1877918,title:"Final Fantasy XVI",genre:"Action RPG",icon:"🌍",colors:["#050508","#0a0a15"],platforms:{PS5:199},rating:5,year:2023,desc:"A dark and epic standalone Final Fantasy. Clive battles Eikons across a gorgeous medieval fantasy world."},
+  {id:64,steam_id:1801400,title:"Like a Dragon: Ishin",genre:"Action RPG",icon:"🍜",colors:["#0a0505","#1a0808"],platforms:{PS4:129,PS5:149,Xbox:129},rating:4,year:2023,desc:"Kiryu in feudal Japan! A samurai action RPG set during the Bakumatsu period in 19th-century Japan."},
+  {id:65,steam_id:1282100,title:"Remnant II",genre:"Action Shooter",icon:"🌀",colors:["#080508","#150a15"],platforms:{PS4:109,PS5:129,Xbox:109},rating:4,year:2023,desc:"Defeat otherworldly bosses across randomly generated worlds in this challenging third-person action shooter."},
+  {id:66,steam_id:null,title:"Sifu",genre:"Action",icon:"🥋",colors:["#0a0808","#1a1010"],platforms:{PS4:89,PS5:109},rating:4,year:2022,desc:"Master kung fu as you age with every defeat. A challenging and rewarding martial arts action game set in China."},
+  {id:67,steam_id:1325200,title:"Nioh 2",genre:"Action RPG",icon:"⛩️",colors:["#050508","#0a0818"],platforms:{PS4:89,PS5:109},rating:5,year:2020,desc:"Navigate feudal Japan as a half-human, half-yokai warrior. Challenging but deeply rewarding samurai action."},
+  {id:68,steam_id:814380,title:"Sekiro: Shadows Die Twice",genre:"Action RPG",icon:"🎴",colors:["#050508","#0f0a15"],platforms:{PS4:89,Xbox:89},rating:5,year:2019,desc:"Master the art of the shinobi in Sengoku-era Japan. A demanding but extraordinary swordplay action game."},
+  {id:69,steam_id:null,title:"Kena: Bridge of Spirits",genre:"Action Adventure",icon:"🌸",colors:["#050a08","#0a1a15"],platforms:{PS4:89,PS5:109},rating:4,year:2021,desc:"Guide spirits to the afterlife in this visually stunning action adventure with Pixar-quality animation."},
+  {id:70,steam_id:null,title:"Greedfall 2",genre:"RPG",icon:"🌿",colors:["#080808","#121010"],platforms:{PS4:109,PS5:129,Xbox:109},rating:3,year:2024,desc:"Navigate political intrigue and explore a living world in this fantasy RPG with deep narrative choices."},
+  {id:71,steam_id:1627720,title:"Lies of P: Gold Mask",genre:"Soulslike",icon:"🎭",colors:["#0a0808","#1a1015"],platforms:{PS4:109,PS5:129,Xbox:109},rating:4,year:2024,desc:"Extended DLC for Lies of P. New weapons, bosses, and areas that expand the dark Krat narrative."},
+  {id:72,steam_id:2909400,title:"Final Fantasy VII Rebirth",genre:"Action RPG",icon:"🌺",colors:["#050510","#0a0a20"],platforms:{PS5:199},rating:5,year:2024,desc:"The second chapter of the FF7 Remake trilogy. Cloud and friends venture into the wider world beyond Midgar."},
+  {id:73,steam_id:null,title:"Suicide Squad: Kill the JL",genre:"Action Shooter",icon:"💣",colors:["#0a0508","#1a0810"],platforms:{PS5:129,Xbox:129},rating:3,year:2024,desc:"Harley, Deadshot, Captain Boomerang, and King Shark take on Brainiac's mind-controlled Justice League."},
+  {id:74,steam_id:null,title:"Prince of Persia: The Lost Crown",genre:"Action Platformer",icon:"🏺",colors:["#0a0508","#1a0a10"],platforms:{PS4:89,PS5:109,Xbox:89},rating:5,year:2024,desc:"A fresh take on the classic franchise. Masterful Metroidvania design with lightning-fast platforming and combat."},
+  {id:75,steam_id:881020,title:"Granblue Fantasy Relink",genre:"Action RPG",icon:"⚔️",colors:["#050a10","#0a1a30"],platforms:{PS4:129,PS5:149},rating:4,year:2024,desc:"Soar through the skies with Gran and crew in this fast-paced action RPG with stunning anime visuals."},
+  {id:76,steam_id:null,title:"Skull and Bones",genre:"Pirate Action",icon:"☠️",colors:["#050810","#0a1525"],platforms:{PS4:109,PS5:129,Xbox:109},rating:3,year:2024,desc:"Command your ship and build a pirate empire in the Indian Ocean. Naval combat, base building, and exploration."},
+  {id:77,steam_id:553850,title:"Helldivers 2",genre:"Co-op Shooter",icon:"💫",colors:["#050808","#0a1515"],platforms:{PS5:129},rating:5,year:2024,desc:"Dive into an explosive third-person co-op shooter defending Super Earth from alien threats. Hilarious chaos awaits."},
+  {id:78,steam_id:2054970,title:"Dragon's Dogma 2",genre:"Action RPG",icon:"🐲",colors:["#080505","#150a08"],platforms:{PS5:169,Xbox:169},rating:4,year:2024,desc:"Lead your pawn party across a vast open world as the Arisen, defeating dragons and uncovering your destiny."},
+  {id:79,steam_id:null,title:"Rise of the Ronin",genre:"Action RPG",icon:"🗾",colors:["#050508","#100a15"],platforms:{PS5:199},rating:4,year:2024,desc:"Navigate the turbulent Bakumatsu period of Japan. Shape the fate of your country through alliances and blade."},
+  {id:80,steam_id:2183900,title:"Warhammer 40K: Space Marine 2",genre:"Action Shooter",icon:"🔨",colors:["#050508","#0f0a18"],platforms:{PS4:129,PS5:149,Xbox:129},rating:5,year:2024,desc:"Fight in epic battles as an Ultramarine in the 41st millennium. Brutal third-person action against the Tyranid swarm."},
+  {id:81,steam_id:1517290,title:"Battlefield 2042",genre:"FPS Shooter",icon:"💥",colors:["#050a10","#081a25"],platforms:{PS4:89,PS5:109,Xbox:89},rating:3,year:2021,desc:"Epic-scale warfare with 128-player battles. Dynamic weather, specialist operators, and futuristic battlefields."},
+  {id:82,steam_id:null,title:"Overwatch 2",genre:"FPS Shooter",icon:"🎯",colors:["#050a10","#0a1828"],platforms:{PS4:0,PS5:0,Xbox:0},rating:4,year:2022,desc:"Free-to-play team-based action shooter. New 5v5 format, new heroes, and regular seasonal updates. FREE TO PLAY."},
+  {id:83,steam_id:1286680,title:"Tiny Tina's Wonderlands",genre:"FPS RPG",icon:"🔮",colors:["#0a0508","#1a0a10"],platforms:{PS4:109,PS5:129,Xbox:109},rating:4,year:2022,desc:"Embark on a tabletop RPG adventure inside Tiny Tina's fantasy world in this Borderlands spin-off."},
+  {id:84,steam_id:null,title:"Watch Dogs: Legion",genre:"Action Adventure",icon:"🎮",colors:["#050a10","#0a1530"],platforms:{PS4:65,PS5:89,Xbox:65},rating:3,year:2020,desc:"Recruit and play as anyone in a near-future London. Build a resistance to fight an oppressive regime."},
+  {id:85,steam_id:null,title:"Immortals Fenyx Rising",genre:"Action RPG",icon:"⚡",colors:["#050808","#0a1520"],platforms:{PS4:65,PS5:89,Xbox:65},rating:4,year:2020,desc:"A light-hearted Greek mythology adventure. Explore a vibrant open world, solve puzzles, and battle monsters."},
+];
+
+// ─── RENDER GAMES ────────────────────────────────────────────
+let cart = [];
+let activeFilter = 'all';
+let searchQuery = '';
+let selectedPlatform = null;
+let currentGame = null;
+
+function getBasePrice(game) {
+  const prices = Object.values(game.platforms).filter(p => p > 0);
+  if (!prices.length) return 0;
+  return Math.min(...prices);
+}
+
+function platformTag(game) {
+  const plats = Object.keys(game.platforms);
+  if (plats.length > 2) return {cls:'t-multi', label:'MULTI'};
+  if (plats.includes('PS5') && !plats.includes('PS4') && !plats.includes('Xbox')) return {cls:'t-ps5', label:'PS5'};
+  if (plats.includes('PS4') && !plats.includes('PS5') && !plats.includes('Xbox')) return {cls:'t-ps4', label:'PS4'};
+  if (plats.includes('Xbox') && !plats.includes('PS4') && !plats.includes('PS5')) return {cls:'t-xbox', label:'XBOX'};
+  return {cls:'t-multi', label:'MULTI'};
+}
+
+function stars(n) {
+  return [1,2,3,4,5].map(i=>`<span class="star${i<=n?'':' empty'}">${i<=n?'★':'☆'}</span>`).join('');
+}
+
+function formatPrice(p) {
+  if (p === 0) return '<span style="color:var(--xbox-glow)">FREE</span>';
+  return 'AED '+p.toLocaleString('en-AE');
+}
+
+function gameMatchesFilter(game) {
+  if (activeFilter !== 'all') {
+    const plats = Object.keys(game.platforms);
+    if (!plats.includes(activeFilter)) return false;
+  }
+  if (searchQuery) {
+    const q = searchQuery.toLowerCase();
+    if (!game.title.toLowerCase().includes(q) && !game.genre.toLowerCase().includes(q)) return false;
+  }
+  return true;
+}
+
+function renderGames() {
+  const grid = document.getElementById('gamesGrid');
+  const visible = GAMES.filter(gameMatchesFilter);
+  document.getElementById('gamesCount').textContent = `${visible.length} games`;
+
+  grid.innerHTML = GAMES.map(game => {
+    const show = gameMatchesFilter(game);
+    const tag = platformTag(game);
+    const price = getBasePrice(game);
+    const steamImg = game.steam_id
+      ? `<img src="https://cdn.cloudflare.steamstatic.com/steam/apps/${game.steam_id}/library_600x900.jpg"
+             style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0"
+             loading="lazy"
+             onerror="this.style.display='none'">`
+      : '';
+    return `
+    <div class="game-card${show?'':' hidden'}" data-id="${game.id}">
+      <div class="game-thumb" style="background:linear-gradient(135deg,${game.colors[0]},${game.colors[1]})">
+        ${steamImg}
+        <div class="game-thumb-shine"></div>
+        <span class="game-thumb-icon" style="z-index:1;position:relative">${game.steam_id?'':game.icon}</span>
+        <div class="game-thumb-title" style="z-index:1;position:relative">${game.steam_id?'':game.title}</div>
+        <span class="plat-tag ${tag.cls}" style="z-index:2">${tag.label}</span>
+        <div class="game-overlay" style="z-index:3">
+          <button class="overlay-btn">VIEW &amp; SELECT PLATFORM</button>
+        </div>
+      </div>
+      <div class="game-info">
+        <div class="game-title">${game.title}</div>
+        <div class="game-genre">${game.genre}</div>
+        <div class="game-stars">${stars(game.rating)}</div>
+        <div class="game-price">${price===0?'<span style="color:var(--xbox-glow)">FREE</span>':'from '+formatPrice(price)}</div>
+      </div>
+    </div>`;
+  }).join('');
+
+  // click handlers
+  grid.querySelectorAll('.game-card').forEach(card => {
+    card.addEventListener('click', () => {
+      const id = parseInt(card.dataset.id);
+      openModal(GAMES.find(g => g.id === id));
+    });
+  });
+}
+
+// ─── PLATFORM FILTER ─────────────────────────────────────────
+document.getElementById('platformFilter').addEventListener('click', e => {
+  const btn = e.target.closest('.pf-btn');
+  if (!btn) return;
+  document.querySelectorAll('.pf-btn').forEach(b => b.className = 'pf-btn');
+  const f = btn.dataset.filter;
+  activeFilter = f;
+  const cls = f === 'all' ? 'active' : f === 'PS5' ? 'active-ps5' : f === 'PS4' ? 'active-ps4' : 'active-xbox';
+  btn.classList.add(cls);
+  renderGames();
+});
+
+// ─── SEARCH ──────────────────────────────────────────────────
+function setupSearch() {
+  const gs = document.getElementById('gameSearch');
+  const ns = document.getElementById('navSearch');
+  [gs, ns].forEach(inp => {
+    if (!inp) return;
+    inp.addEventListener('input', e => {
+      searchQuery = e.target.value;
+      gs.value = searchQuery;
+      if(ns) ns.value = searchQuery;
+      renderGames();
+      if (searchQuery) document.getElementById('games').scrollIntoView({behavior:'smooth'});
+    });
+  });
+}
+
+// ─── MODAL ───────────────────────────────────────────────────
+function openModal(game) {
+  currentGame = game;
+  selectedPlatform = null;
+
+  document.getElementById('modalCover').style.background =
+    `linear-gradient(135deg,${game.colors[0]},${game.colors[1]})`;
+  document.getElementById('modalCover').innerHTML =
+    `<span style="font-size:5rem;z-index:1">${game.icon}</span>`;
+
+  // tags
+  const tag = platformTag(game);
+  document.getElementById('modalTags').innerHTML =
+    Object.keys(game.platforms).map(p => {
+      const cls = p==='PS5'?'t-ps5':p==='PS4'?'t-ps4':'t-xbox';
+      return `<span class="modal-tag ${cls}">${p}</span>`;
+    }).join('') +
+    `<span class="modal-tag" style="background:rgba(255,255,255,.08);color:var(--muted)">${game.genre}</span>` +
+    `<span class="modal-tag" style="background:rgba(255,255,255,.08);color:var(--muted)">${game.year}</span>`;
+
+  document.getElementById('modalTitle').textContent = game.title;
+  document.getElementById('modalMeta').textContent = `${game.genre} · ${game.year}`;
+  document.getElementById('modalStars').innerHTML = stars(game.rating);
+  document.getElementById('modalDesc').textContent = game.desc;
+
+  // platform options
+  const allPlatforms = ['PS5','PS4','Xbox'];
+  document.getElementById('platformOptions').innerHTML = allPlatforms.map(p => {
+    const available = game.platforms.hasOwnProperty(p);
+    const price = available ? game.platforms[p] : null;
+    const bgCol = p==='PS5'?'var(--ps-glow)':p==='PS4'?'#6644ff':'var(--xbox-glow)';
+    return `
+    <div class="plat-opt${!available?' unavailable':''}" data-plat="${p}">
+      <span class="plat-badge" style="background:${bgCol};color:white;width:fit-content">${p}</span>
+      <div class="plat-opt-name">${p==='PS5'?'PlayStation 5':p==='PS4'?'PlayStation 4':'Xbox Series X'}</div>
+      ${available
+        ? `<div class="plat-opt-price">${price===0?'FREE':'AED '+price.toLocaleString('en-AE')}</div>`
+        : `<div style="font-family:'Share Tech Mono',monospace;font-size:.7rem;color:var(--muted)">NOT AVAILABLE</div>`
+      }
+    </div>`;
+  }).join('');
+
+  document.querySelectorAll('.plat-opt:not(.unavailable)').forEach(opt => {
+    opt.addEventListener('click', () => {
+      document.querySelectorAll('.plat-opt').forEach(o => o.classList.remove('selected'));
+      opt.classList.add('selected');
+      selectedPlatform = opt.dataset.plat;
+      const price = game.platforms[selectedPlatform];
+      const addBtn = document.getElementById('modalAddCart');
+      addBtn.disabled = false;
+      addBtn.textContent = price === 0
+        ? `ADD TO CART — FREE`
+        : `ADD TO CART — AED ${price.toLocaleString('en-AE')}`;
+    });
+  });
+
+  document.getElementById('modalAddCart').disabled = true;
+  document.getElementById('modalAddCart').textContent = 'SELECT A PLATFORM FIRST';
+
+  document.getElementById('modalOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  document.getElementById('modalOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+  currentGame = null;
+  selectedPlatform = null;
+}
+
+document.getElementById('modalClose').addEventListener('click', closeModal);
+document.getElementById('modalOverlay').addEventListener('click', e => {
+  if (e.target === document.getElementById('modalOverlay')) closeModal();
+});
+
+document.getElementById('modalAddCart').addEventListener('click', () => {
+  if (!currentGame || !selectedPlatform) return;
+  const price = currentGame.platforms[selectedPlatform];
+  cart.push({game: currentGame, platform: selectedPlatform, price});
+  updateCartBtn();
+  showToast(`${currentGame.title} [${selectedPlatform}] added! 🎮`);
+  closeModal();
+});
+
+// ─── CART SIDEBAR ─────────────────────────────────────────────
+function openCart() {
+  document.getElementById('cartSidebar').classList.add('open');
+  document.getElementById('cartOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+  renderCart();
+}
+function closeCart() {
+  document.getElementById('cartSidebar').classList.remove('open');
+  document.getElementById('cartOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+function updateCartBtn() {
+  document.getElementById('cartBtn').textContent = `🛒 Cart (${cart.length})`;
+}
+function renderCart() {
+  const itemsEl = document.getElementById('cartItems');
+  const footerEl = document.getElementById('cartFooter');
+  if (cart.length === 0) {
+    itemsEl.innerHTML = `<div class="cart-empty"><div style="font-size:3rem;margin-bottom:1rem">🎮</div><div style="font-family:'Orbitron',monospace;font-size:.85rem;color:var(--muted)">Your cart is empty.<br>Add some games!</div></div>`;
+    footerEl.style.display = 'none';
+    return;
+  }
+  footerEl.style.display = 'block';
+  itemsEl.innerHTML = cart.map((item, idx) => {
+    const platColor = item.platform==='PS5'?'var(--ps-glow)':item.platform==='PS4'?'#6644ff':'var(--xbox-glow)';
+    return `
+    <div class="cart-item">
+      <div class="cart-item-icon" style="background:linear-gradient(135deg,${item.game.colors[0]},${item.game.colors[1]})">${item.game.icon}</div>
+      <div class="cart-item-info">
+        <div class="cart-item-title">${item.game.title}</div>
+        <div class="cart-item-plat" style="color:${platColor}">${item.platform}</div>
+        <div class="cart-item-price">${item.price===0?'FREE':'AED '+item.price.toLocaleString('en-AE')}</div>
+      </div>
+      <button class="cart-item-remove" onclick="removeFromCart(${idx})">✕</button>
+    </div>`;
+  }).join('');
+  const total = cart.reduce((s,i)=>s+i.price,0);
+  document.getElementById('cartSubtotal').textContent = 'AED '+total.toLocaleString('en-AE');
+  document.getElementById('cartTotal').textContent = 'AED '+total.toLocaleString('en-AE');
+}
+function removeFromCart(idx) {
+  cart.splice(idx,1);
+  updateCartBtn();
+  renderCart();
+}
+document.getElementById('cartBtn').addEventListener('click', openCart);
+document.getElementById('cartClose').addEventListener('click', closeCart);
+document.getElementById('cartOverlay').addEventListener('click', closeCart);
+document.getElementById('cartClear').addEventListener('click', () => { cart=[]; updateCartBtn(); renderCart(); });
+
+// ─── TOAST ───────────────────────────────────────────────────
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+// ─── NEWSLETTER ──────────────────────────────────────────────
+document.getElementById('nlBtn').addEventListener('click', () => {
+  const email = document.getElementById('nlEmail').value.trim();
+  if (!email || !email.includes('@')) {
+    showToast('Please enter a valid email address');
+    return;
+  }
+  // Opens mail client — replace ameensalihh@gmail.com with your actual email
+  const subject = encodeURIComponent('ALZAHRA Gaming Store — Newsletter Subscription');
+  const body = encodeURIComponent(`New subscriber: ${email}\n\nPlease add me to the ALZAHRA Gaming Store newsletter.`);
+  window.location.href = `mailto:ameensalihh@gmail.com?subject=${subject}&body=${body}`;
+  document.getElementById('nlMsg').classList.add('show');
+  document.getElementById('nlEmail').value = '';
+  setTimeout(() => document.getElementById('nlMsg').classList.remove('show'), 4000);
+});
+
+
+
+// ─── SCROLL REVEAL ───────────────────────────────────────────
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+}, {threshold:.08});
+document.querySelectorAll('.reveal').forEach(r => io.observe(r));
+
+// ─── CONSOLE ADD TO CART ─────────────────────────────────────
+function addConsoleToCart(name, platform, icon, price) {
+  cart.push({
+    game: { title: name, icon: icon, colors: ['#0a0a1a','#1a1a3a'], id: 'console-'+platform },
+    platform: platform + ' Console',
+    price: price,
+    isConsole: true
+  });
+  updateCartBtn();
+  showToast(`${name} added to cart! ${icon}`);
+}
+
+// ─── PAYMENT MODAL ───────────────────────────────────────────
+function openPayment() {
+  if (cart.length === 0) { showToast('Your cart is empty!'); return; }
+  // Build order summary
+  const summaryEl = document.getElementById('payOrderSummary');
+  const total = cart.reduce((s,i) => s + i.price, 0);
+  summaryEl.innerHTML = cart.map(item => `
+    <div class="pay-order-item">
+      <span class="pay-order-name">${item.game.icon} ${item.game.title} <span style="color:var(--muted);font-size:.8rem">[${item.platform}]</span></span>
+      <span class="pay-order-price">${item.price===0?'FREE':'AED '+item.price.toLocaleString('en-AE')}</span>
+    </div>`).join('') +
+    `<div class="pay-order-total"><span>Total to Pay</span><span>AED ${total.toLocaleString('en-AE')}</span></div>`;
+  // Reset form
+  document.getElementById('payForm').style.display = 'block';
+  document.getElementById('paySuccess').classList.remove('show');
+  document.querySelectorAll('.pay-method').forEach(m => m.classList.remove('selected'));
+  document.getElementById('payCardFields').classList.remove('show');
+  document.getElementById('payUpiField').classList.remove('show');
+  document.getElementById('payCodNote').classList.remove('show');
+  ['payName','payPhone','payEmail','payAddress','payCardNum','payExpiry','payCvv','payCardName','payUpiId'].forEach(id => {
+    const el = document.getElementById(id); if(el) el.value = '';
+  });
+  document.getElementById('payOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closePayment() {
+  document.getElementById('payOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function clearCartAfterOrder() {
+  cart = []; updateCartBtn();
+}
+
+function selectPayMethod(el) {
+  document.querySelectorAll('.pay-method').forEach(m => m.classList.remove('selected'));
+  el.classList.add('selected');
+  const method = el.dataset.method;
+  document.getElementById('payCardFields').classList.toggle('show', method === 'card');
+  document.getElementById('payUpiField').classList.toggle('show', method === 'upi');
+  document.getElementById('payCodNote').classList.toggle('show', method === 'cod');
+}
+
+function confirmOrder() {
+  const name = document.getElementById('payName').value.trim();
+  const phone = document.getElementById('payPhone').value.trim();
+  const email = document.getElementById('payEmail').value.trim();
+  const address = document.getElementById('payAddress').value.trim();
+  const method = document.querySelector('.pay-method.selected');
+  if (!name || !phone || !address) { showToast('Please fill in Name, Phone & Address'); return; }
+  if (!method) { showToast('Please select a payment method'); return; }
+  if (method.dataset.method === 'card') {
+    if (!document.getElementById('payCardNum').value.trim() ||
+        !document.getElementById('payExpiry').value.trim() ||
+        !document.getElementById('payCvv').value.trim()) {
+      showToast('Please fill in all card details'); return;
+    }
+  }
+  if (method.dataset.method === 'upi' && !document.getElementById('payUpiId').value.trim()) {
+    showToast('Please enter your UPI ID'); return;
+  }
+  // Generate order ID
+  const orderId = 'ALZ-' + Date.now().toString().slice(-8).toUpperCase();
+  // Show success
+  document.getElementById('payForm').style.display = 'none';
+  document.getElementById('paySuccess').classList.add('show');
+  document.getElementById('payOrderId').textContent = 'Order ID: ' + orderId;
+
+  // Send email notification (opens mail client with order details)
+  const total = cart.reduce((s,i) => s+i.price, 0);
+  const items = cart.map(i => `${i.game.title} [${i.platform}] - AED ${i.price.toLocaleString('en-AE')}`).join('\n');
+  const subject = encodeURIComponent(`New Order ${orderId} — ALZAHRA Gaming Store`);
+  const body = encodeURIComponent(
+    `NEW ORDER RECEIVED\n\nOrder ID: ${orderId}\n\nCUSTOMER DETAILS:\nName: ${name}\nPhone: ${phone}\nEmail: ${email}\nAddress: ${address}\nPayment: ${method.dataset.method.toUpperCase()}\n\nORDER ITEMS:\n${items}\n\nTOTAL: AED ${total.toLocaleString('en-AE')}`
+  );
+  // Replace ameensalihh@gmail.com with your actual email
+  setTimeout(() => {
+    window.open(`mailto:ameensalihh@gmail.com?subject=${subject}&body=${body}`, '_blank');
+  }, 600);
+}
+
+// Card number auto-formatting
+document.getElementById('payCardNum')?.addEventListener('input', function() {
+  let v = this.value.replace(/\D/g,'').substring(0,16);
+  this.value = v.replace(/(.{4})/g,'$1  ').trim();
+});
+document.getElementById('payExpiry')?.addEventListener('input', function() {
+  let v = this.value.replace(/\D/g,'').substring(0,4);
+  if(v.length>2) v = v.substring(0,2) + ' / ' + v.substring(2);
+  this.value = v;
+});
+
+document.getElementById('payClose').addEventListener('click', closePayment);
+document.getElementById('payOverlay').addEventListener('click', e => {
+  if (e.target === document.getElementById('payOverlay')) closePayment();
+});
+document.addEventListener('keydown', e => { if(e.key==='Escape'){ closeModal(); closeCart(); closePayment(); }});
+
+// ─── INIT ────────────────────────────────────────────────────
+renderGames();
+setupSearch();
+</script>
+</body>
+</html>
